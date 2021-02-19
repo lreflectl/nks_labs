@@ -27,8 +27,9 @@ try:
         default_y = float(input("Введіть Y: "))
         default_working_probability_time = int(input("Введіть час до безвідмовної роботи: "))
         default_failure_intensity_time = int(input("Введіть час для інтенсивності відмов: "))
-except TypeError:
-    pass
+except ValueError:
+    print("Помилка даних")
+    exit()
 
 if len(default_input_sample) == 0 or not 0 <= default_y < 1:
     print("Помилка даних")
