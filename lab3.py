@@ -135,11 +135,24 @@ if __name__ == '__main__':
     G_T = T_reserved_system / T_system
     print('    Виграш надійності за середнім часом безвідмовної роботи =', round(G_T, 3))
 
+    print(f'\nПоказники системи з ЗАГАЛЬНИМ НАВАНТАЖЕНИМ РЕЗЕРВУВАННЯМ, з кратністю {k}:')
+    P_reserved_system = 1 - (1 - P_system)**(k + 1)
+    print(f'    Ймовірність безвідмовної роботи = ', P_reserved_system)
+    Q_reserved_system = 1 - P_reserved_system
+    print(f'    Ймовірність відмови = ', Q_reserved_system)
+    T_reserved_system = round((-time) / math.log(P_reserved_system), 1)
+    print('    Середній наробіток системи = ', T_reserved_system, 'годин')
+    G_Q = Q_reserved_system / Q_system
+    print('    Виграш надійності за ймовірністю відмов =', G_Q)
+    G_P = P_reserved_system / P_system
+    print('    Виграш надійності за ймовірністю безвідмовної роботи =', round(G_P, 3))
+    G_T = T_reserved_system / T_system
+    print('    Виграш надійності за середнім часом безвідмовної роботи =', round(G_T, 3))
+
     print(f'\nПоказники системи з РОЗДІЛЬНИМ НАВАНТАЖЕНИМ РЕЗЕРВУВАННЯМ, з кратністю {k}:')
     reserved_probabilities = []
     for p in probabilities:
         reserved_probabilities.append(round(1 - (1 - p)**(k + 1), 6))
-
     p_states_reserved = get_p_states(working_states, reserved_probabilities)
     P_reserved_system = round(sum(p_states_reserved), 6)
     print(f'    Ймовірність безвідмовної роботи = ', P_reserved_system)
@@ -154,10 +167,20 @@ if __name__ == '__main__':
     G_T = T_reserved_system / T_system
     print('    Виграш надійності за середнім часом безвідмовної роботи =', round(G_T, 3))
 
-
-
-
-
-
-
-
+    print(f'\nПоказники системи з РОЗДІЛЬНИМ НЕНАВАНТАЖЕНИМ РЕЗЕРВУВАННЯМ, з кратністю {k}:')
+    reserved_probabilities = []
+    for p in probabilities:
+        reserved_probabilities.append(1 - (1 / math.factorial(k + 1)) * (1 - p))
+    p_states_reserved = get_p_states(working_states, reserved_probabilities)
+    P_reserved_system = round(sum(p_states_reserved), 6)
+    print(f'    Ймовірність безвідмовної роботи = ', P_reserved_system)
+    Q_reserved_system = round(1 - P_reserved_system, 6)
+    print(f'    Ймовірність відмови = ', Q_reserved_system)
+    T_reserved_system = round((-time) / math.log(P_reserved_system), 1)
+    print('    Середній наробіток системи = ', T_reserved_system, 'годин')
+    G_Q = Q_reserved_system / Q_system
+    print('    Виграш надійності за ймовірністю відмов =', round(G_Q, 3))
+    G_P = P_reserved_system / P_system
+    print('    Виграш надійності за ймовірністю безвідмовної роботи =', round(G_P, 3))
+    G_T = T_reserved_system / T_system
+    print('    Виграш надійності за середнім часом безвідмовної роботи =', round(G_T, 3))
